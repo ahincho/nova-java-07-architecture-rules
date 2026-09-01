@@ -63,8 +63,6 @@ with the exact offending class.
 
 ## License
 
-Apache 2.0 — see [LICENSE](LICENSE).
-## Maintainer
+Eclipse Public License 2.0 — see [LICENSE](LICENSE).
 
-Run on each push to main (and every PR). The pipeline is reused from
-hincho/nova-devops via reusable workflows.
+Copyright © 2026 Angel Hincho.
