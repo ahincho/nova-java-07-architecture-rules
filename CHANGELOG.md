@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/ahincho/nova-java-07-architecture-rules/compare/v1.1.1...v1.1.2) (2026-09-27)
+
+
+### Documentation
+
+* adopt EPL-2.0 ([41a548f](https://github.com/ahincho/nova-java-07-architecture-rules/commit/41a548f0a4fcd445442bc0e146557b2980ff70d8))
+
 ## [1.1.1](https://github.com/ahincho/nova-java-architecture-rules/compare/v1.1.0...v1.1.1) (2026-07-16)
 
 
