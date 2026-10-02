@@ -35,6 +35,8 @@ dependencies {
     api("org.junit.jupiter:junit-jupiter-api:$junitVersion")
 
     testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    // Corre el motor de ArchUnit sobre los servicios de ejemplo y lee el resultado de cada regla.
+    testImplementation("org.junit.platform:junit-platform-testkit")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
@@ -49,6 +51,9 @@ tasks.jacocoTestReport {
 
 tasks.test {
     useJUnitPlatform()
+    // Los servicios de ejemplo de fixtures incumplen las reglas a propósito. Solo los corre
+    // LayeredArchitectureRulesTest, por su selector; el escaneo de Gradle no debe tomarlos como pruebas.
+    exclude("**/fixtures/**")
     finalizedBy(tasks.jacocoTestReport)
 }
 
