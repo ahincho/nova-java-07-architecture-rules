@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/ahincho/nova-java-07-architecture-rules/compare/v1.1.2...v1.2.0) (2026-10-02)
+
+
+### Features
+
+* let controllers use the framework-free Nova libraries ([d7ac675](https://github.com/ahincho/nova-java-07-architecture-rules/commit/d7ac6751f4c7b339f54e5240b289dc7baa8a8311))
+
+
+### Documentation
+
+* describe the layered rules as they are and the Gradle install ([e96acbe](https://github.com/ahincho/nova-java-07-architecture-rules/commit/e96acbe77ddd32625f0eb4a903a0ec24788ccd32))
+
 ## [1.1.2](https://github.com/ahincho/nova-java-07-architecture-rules/compare/v1.1.1...v1.1.2) (2026-09-27)
 
 
