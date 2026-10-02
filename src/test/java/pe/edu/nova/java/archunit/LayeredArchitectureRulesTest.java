@@ -11,6 +11,7 @@ import pe.edu.nova.java.archunit.fixtures.LeakyControllerArchitecture;
 import pe.edu.nova.java.archunit.fixtures.PartialServiceArchitecture;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.platform.engine.TestExecutionResult.Status.SUCCESSFUL;
@@ -38,13 +39,14 @@ class LayeredArchitectureRulesTest {
     }
 
     @Test
-    void aControllerMayNotReachTheServicePackagesOutsideTheLayersNorTheStartersOfNova() {
+    void aControllerMayUseTheNovaLibrariesButNotTheRestOfNova() {
         final Map<String, String> failures = failuresOf(evaluate(LeakyControllerArchitecture.class));
 
         final String violations = failures.get(CONTROLLER_ALLOW_LIST);
         assertNotNull(violations, "the controller reached packages it should not have: " + failures.keySet());
         assertTrue(violations.contains("Settings.name()"), violations);
         assertTrue(violations.contains("Wiring.name()"), violations);
+        assertFalse(violations.contains("FixtureError"), violations);
     }
 
     @Test

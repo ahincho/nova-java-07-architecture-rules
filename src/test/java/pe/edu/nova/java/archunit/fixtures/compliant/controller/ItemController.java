@@ -3,8 +3,9 @@ package pe.edu.nova.java.archunit.fixtures.compliant.controller;
 import pe.edu.nova.java.archunit.fixtures.compliant.dto.ItemResponse;
 import pe.edu.nova.java.archunit.fixtures.compliant.entity.Item;
 import pe.edu.nova.java.archunit.fixtures.compliant.service.ItemService;
+import pe.edu.nova.java.libs.fixture.FixtureError;
 
-/** Solo traduce: llama al servicio y arma la respuesta. */
+/** Rechaza la entrada con un error de la librería de Nova, como pide ADR-031, y deja el resto al servicio. */
 public final class ItemController {
 
     private final ItemService service;
@@ -25,6 +26,9 @@ public final class ItemController {
      * @return el ítem
      */
     public ItemResponse find(final String id) {
+        if (id.isBlank()) {
+            throw FixtureError.of("el id es obligatorio");
+        }
         final Item item = service.find(id);
         return new ItemResponse(item.id(), item.quantity());
     }

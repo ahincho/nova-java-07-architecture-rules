@@ -58,6 +58,13 @@ public abstract class LayeredArchitectureTest {
     protected static final String SHARED_PACKAGE = "shared";
 
     /**
+     * Las librerías de Nova que no dependen de ningún framework, como el módulo de errores por capas de
+     * ADR-031 ({@code pe.edu.nova.java.libs.api.standard.error}). A diferencia de las constantes de arriba,
+     * es un patrón absoluto y no una capa del servicio.
+     */
+    protected static final String NOVA_LIBRARIES = "pe.edu.nova.java.libs..";
+
+    /**
      * Returns the base package that contains all the application's
      * code. Defaults to the root package passed to
      * {@link AnalyzeClasses} on the concrete subclass; override if
@@ -88,9 +95,15 @@ public abstract class LayeredArchitectureTest {
                             + "never call repositories directly");
 
     /**
-     * Controllers may depend on services (mandatory) and the rest of
-     * the layers, but never on infrastructure-only modules (none
-     * exist in the Layered convention so this is a defensive rule).
+     * Un controlador solo accede a las capas del servicio, a la JDK, a Jakarta, a Spring, a Quarkus, a las
+     * librerías de prueba y a las librerías de Nova sin framework ({@link #NOVA_LIBRARIES}). Estas últimas
+     * traen los errores por capas de ADR-031, y un controlador tiene que poder lanzar
+     * {@code ApplicationError.invalidInput(...)} sin que la regla lo marque.
+     *
+     * <p>Es la única capa con una lista de permitidos. Las reglas de las demás solo prohíben capas
+     * concretas, así que el dominio ({@code entity} y {@code service}) y los repositorios ya podían usar
+     * esas librerías, como {@code DomainError}. Los starters de Nova ({@code pe.edu.nova.java.starters..})
+     * y los demás paquetes del propio servicio siguen fuera de la lista.
      */
     @ArchTest
     private final ArchRule controllers_depend_only_on_allowed_layers =
@@ -103,6 +116,7 @@ public abstract class LayeredArchitectureTest {
                             layered(ENTITY_PACKAGE),
                             layered(DTO_PACKAGE),
                             layered(SHARED_PACKAGE),
+                            NOVA_LIBRARIES,
                             "java..",
                             "jakarta..",
                             "org.springframework..",
@@ -112,7 +126,8 @@ public abstract class LayeredArchitectureTest {
                             "org.assertj..")
                     .because("controllers are the driving adapter layer; "
                             + "their dependencies must be limited to "
-                            + "the documented Layered packages");
+                            + "the documented Layered packages and "
+                            + "the framework-free Nova libraries");
 
     /**
      * Services are the orchestration layer: they may consume
